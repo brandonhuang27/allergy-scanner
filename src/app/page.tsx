@@ -1,20 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { AccessGate } from "@/components/AccessGate";
 import { AllergyPicker } from "@/components/AllergyPicker";
 import { PhotoInput } from "@/components/PhotoInput";
 import { Disclaimer, Results } from "@/components/Results";
 import { ALLERGENS } from "@/data/allergens";
-import { analyzeLabel } from "@/lib/analyze";
-import { saveProfile, useProfile } from "@/lib/profileStore";
+import { AccessCodeError, analyzeLabel } from "@/lib/analyze";
+import { saveAccessCode, saveProfile, useAccessCode, useProfile } from "@/lib/profileStore";
 import type { AllergyProfile, ScanResult } from "@/lib/types";
 
 export default function Home() {
   const profile = useProfile();
+  const accessCode = useAccessCode();
   const [editing, setEditing] = useState(false);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<ScanResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [codeNotice, setCodeNotice] = useState<string | null>(null);
 
   async function analyze(image: string, p: AllergyProfile) {
     setBusy(true);
@@ -22,15 +25,30 @@ export default function Home() {
     try {
       setResult(await analyzeLabel(image, p));
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
+      if (e instanceof AccessCodeError) {
+        setCodeNotice("Your access code has changed. Please enter the new one.");
+        saveAccessCode(null);
+      } else {
+        setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
+      }
     } finally {
       setBusy(false);
     }
   }
 
   let body: React.ReactNode;
-  if (profile === undefined) {
-    body = null; // Loading the saved profile.
+  if (profile === undefined || accessCode === undefined) {
+    body = null; // Loading saved data.
+  } else if (accessCode === null) {
+    body = (
+      <AccessGate
+        notice={codeNotice}
+        onAccepted={(code) => {
+          saveAccessCode(code);
+          setCodeNotice(null);
+        }}
+      />
+    );
   } else if (profile === null || editing) {
     body = (
       <AllergyPicker

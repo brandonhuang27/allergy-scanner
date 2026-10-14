@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import { ALLERGENS, type AllergenId } from "@/data/allergens";
+import { checkAccessCode } from "@/lib/accessCode";
 import { AnalysisFailedError, analyzeWithClaude } from "@/lib/claudeAnalysis";
 
 // Receives a label photo and the user's allergies, asks Claude to analyze it,
@@ -27,6 +28,9 @@ function errorResponse(status: number, error: string) {
 }
 
 export async function POST(request: Request) {
+  const denied = checkAccessCode(request);
+  if (denied) return denied;
+
   let body: z.infer<typeof RequestSchema>;
   try {
     body = RequestSchema.parse(await request.json());

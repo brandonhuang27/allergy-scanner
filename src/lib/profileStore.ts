@@ -1,49 +1,25 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { createLocalStore } from "./localStore";
 import type { AllergyProfile } from "./types";
 
-// The allergy profile lives in localStorage so it survives page reloads.
-// useSyncExternalStore keeps server rendering (no localStorage) and the
-// browser in agreement: the server snapshot is null, meaning "not loaded yet".
+const profileStore = createLocalStore(
+  "allergy-profile-v1",
+  (v): v is AllergyProfile =>
+    typeof v === "object" &&
+    v !== null &&
+    Array.isArray((v as AllergyProfile).allergens) &&
+    Array.isArray((v as AllergyProfile).custom),
+);
 
-const KEY = "allergy-profile-v1";
-const listeners = new Set<() => void>();
-let cached: AllergyProfile | null | undefined;
+export const saveProfile = profileStore.set;
+export const useProfile = profileStore.useValue;
 
-function read(): AllergyProfile | null {
-  try {
-    const raw = localStorage.getItem(KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed.allergens) || !Array.isArray(parsed.custom)) return null;
-    return parsed;
-  } catch {
-    return null;
-  }
-}
+const accessCodeStore = createLocalStore(
+  "access-code-v1",
+  (v): v is string => typeof v === "string",
+);
 
-function subscribe(listener: () => void) {
-  listeners.add(listener);
-  return () => listeners.delete(listener);
-}
-
-function getSnapshot() {
-  if (cached === undefined) cached = read();
-  return cached;
-}
-
-export function saveProfile(profile: AllergyProfile) {
-  cached = profile;
-  try {
-    localStorage.setItem(KEY, JSON.stringify(profile));
-  } catch {
-    // Private browsing or storage disabled: keep it in memory for this visit.
-  }
-  listeners.forEach((l) => l());
-}
-
-/** Returns the saved profile, null if none, or undefined while loading on the server. */
-export function useProfile(): AllergyProfile | null | undefined {
-  return useSyncExternalStore(subscribe, getSnapshot, () => undefined);
-}
+export const saveAccessCode = accessCodeStore.set;
+export const getAccessCode = accessCodeStore.get;
+export const useAccessCode = accessCodeStore.useValue;
