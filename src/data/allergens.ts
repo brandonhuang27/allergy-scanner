@@ -97,7 +97,7 @@ export const ALLERGENS: Allergen[] = [
     },
     possible: ["lecithin (E322)", "egg wash", "glaze", "fresh pasta", "binder"],
     notes:
-      'German "Eiweiß" can mean egg white or just "protein" in a nutrition table; flag it as possible unless it is clearly an ingredient.',
+      'German "Eiweiß" means egg white in an ingredient list, but just "protein" in a nutrition table; ignore it in nutrition tables.',
   },
   {
     id: "peanuts",
