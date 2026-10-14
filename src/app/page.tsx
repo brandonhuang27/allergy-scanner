@@ -21,8 +21,8 @@ export default function Home() {
     setError(null);
     try {
       setResult(await analyzeLabel(image, p));
-    } catch {
-      setError("Something went wrong checking this label. Please try again.");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
     } finally {
       setBusy(false);
     }
