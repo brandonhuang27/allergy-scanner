@@ -15,7 +15,7 @@ export default function Home() {
   const accessCode = useAccessCode();
   const [editing, setEditing] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [result, setResult] = useState<ScanResult | null>(null);
+  const [result, setResult] = useState<{ scan: ScanResult; photo: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [codeNotice, setCodeNotice] = useState<string | null>(null);
 
@@ -23,7 +23,7 @@ export default function Home() {
     setBusy(true);
     setError(null);
     try {
-      setResult(await analyzeLabel(image, p));
+      setResult({ scan: await analyzeLabel(image, p), photo: image });
     } catch (e) {
       if (e instanceof AccessCodeError) {
         setCodeNotice("Your access code has changed. Please enter the new one.");
@@ -60,7 +60,14 @@ export default function Home() {
       />
     );
   } else if (result) {
-    body = <Results result={result} profile={profile} onScanAnother={() => setResult(null)} />;
+    body = (
+      <Results
+        result={result.scan}
+        profile={profile}
+        photo={result.photo}
+        onScanAnother={() => setResult(null)}
+      />
+    );
   } else {
     body = (
       <>

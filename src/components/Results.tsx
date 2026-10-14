@@ -1,6 +1,7 @@
 "use client";
 
 import { ALLERGENS } from "@/data/allergens";
+import { Feedback } from "./Feedback";
 import type { AllergyProfile, Finding, ScanResult, Verdict } from "@/lib/types";
 
 const LABELS = new Map<string, string>(ALLERGENS.map((a) => [a.id, a.label]));
@@ -33,10 +34,12 @@ const GROUPS: { verdict: Verdict; title: string; icon: string; box: string; badg
 interface Props {
   result: ScanResult;
   profile: AllergyProfile;
+  /** The photo that was scanned, sent with feedback only if the person opts in. */
+  photo: string;
   onScanAnother: () => void;
 }
 
-export function Results({ result, profile, onScanAnother }: Props) {
+export function Results({ result, profile, photo, onScanAnother }: Props) {
   const flagged = new Set(result.findings.map((f) => f.allergen));
   const notFound = [...profile.allergens, ...profile.custom].filter((a) => !flagged.has(a));
 
@@ -108,6 +111,8 @@ export function Results({ result, profile, onScanAnother }: Props) {
           )}
         </>
       )}
+
+      <Feedback result={result} profile={profile} photo={photo} />
 
       <Disclaimer />
 
