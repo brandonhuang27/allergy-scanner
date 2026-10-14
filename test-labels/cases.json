@@ -1,68 +1,583 @@
 [
   {
     "image": "sample-en-cookies.jpg",
-    "allergens": ["wheat", "milk", "soy", "peanuts", "eggs", "sesame"],
-    "expect": { "contains": ["wheat", "milk", "soy"], "possible": ["peanuts"], "absent": ["eggs", "sesame"] },
+    "allergens": [
+      "wheat",
+      "milk",
+      "soy",
+      "peanuts",
+      "eggs",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "wheat",
+        "milk",
+        "soy"
+      ],
+      "possible": [
+        "peanuts"
+      ],
+      "absent": [
+        "eggs",
+        "sesame"
+      ]
+    },
     "notes": "US label with a CONTAINS line and a facility warning."
   },
   {
     "image": "sample-de-chocolate.jpg",
-    "allergens": ["milk", "tree-nuts", "peanuts", "eggs", "soy"],
-    "expect": { "contains": ["milk", "tree-nuts", "soy"], "possible": ["peanuts"], "absent": ["eggs"] },
+    "allergens": [
+      "milk",
+      "tree-nuts",
+      "peanuts",
+      "eggs",
+      "soy"
+    ],
+    "expect": {
+      "contains": [
+        "milk",
+        "tree-nuts",
+        "soy"
+      ],
+      "possible": [
+        "peanuts"
+      ],
+      "absent": [
+        "eggs"
+      ]
+    },
     "notes": "Trap: 'Eiweiß' in the nutrition table means protein, not egg."
   },
   {
     "image": "sample-de-chocolate-blurry.jpg",
-    "allergens": ["milk", "tree-nuts", "peanuts", "eggs", "soy"],
+    "allergens": [
+      "milk",
+      "tree-nuts",
+      "peanuts",
+      "eggs",
+      "soy"
+    ],
     "unreadable": true,
     "notes": "Too blurry to read. Must say so instead of guessing."
   },
   {
     "image": "sample-ja-shrimp-crackers.jpg",
-    "allergens": ["shellfish", "gluten", "soy", "peanuts", "milk", "eggs"],
-    "expect": { "contains": ["shellfish", "gluten", "soy"], "possible": ["peanuts", "milk", "eggs"], "absent": [] },
+    "allergens": [
+      "shellfish",
+      "gluten",
+      "soy",
+      "peanuts",
+      "milk",
+      "eggs"
+    ],
+    "expect": {
+      "contains": [
+        "shellfish",
+        "gluten",
+        "soy"
+      ],
+      "possible": [
+        "peanuts",
+        "milk",
+        "eggs"
+      ],
+      "absent": []
+    },
     "notes": "Japanese allergen summary line plus a factory cross-contact notice."
   },
   {
     "image": "sample-fr-biscuits.jpg",
-    "allergens": ["gluten", "milk", "eggs", "tree-nuts", "sesame", "peanuts"],
-    "expect": { "contains": ["gluten", "milk", "eggs"], "possible": ["tree-nuts", "sesame"], "absent": ["peanuts"] },
+    "allergens": [
+      "gluten",
+      "milk",
+      "eggs",
+      "tree-nuts",
+      "sesame",
+      "peanuts"
+    ],
+    "expect": {
+      "contains": [
+        "gluten",
+        "milk",
+        "eggs"
+      ],
+      "possible": [
+        "tree-nuts",
+        "sesame"
+      ],
+      "absent": [
+        "peanuts"
+      ]
+    },
     "notes": "'Peut contenir des traces' warning."
   },
   {
     "image": "sample-es-sauce.jpg",
-    "allergens": ["soy", "gluten", "wheat", "sesame", "fish"],
-    "expect": { "contains": ["soy", "gluten", "wheat", "sesame"], "possible": [], "absent": ["fish"] },
+    "allergens": [
+      "soy",
+      "gluten",
+      "wheat",
+      "sesame",
+      "fish"
+    ],
+    "expect": {
+      "contains": [
+        "soy",
+        "gluten",
+        "wheat",
+        "sesame"
+      ],
+      "possible": [],
+      "absent": [
+        "fish"
+      ]
+    },
     "notes": "Wheat hidden inside the soy sauce sub-ingredients."
   },
   {
     "image": "sample-it-pesto.jpg",
-    "allergens": ["milk", "eggs", "tree-nuts", "peanuts"],
-    "expect": { "contains": ["milk", "eggs", "tree-nuts"], "possible": [], "absent": ["peanuts"] },
+    "allergens": [
+      "milk",
+      "eggs",
+      "tree-nuts",
+      "peanuts"
+    ],
+    "expect": {
+      "contains": [
+        "milk",
+        "eggs",
+        "tree-nuts"
+      ],
+      "possible": [],
+      "absent": [
+        "peanuts"
+      ]
+    },
     "notes": "Egg hidden as lysozyme inside the cheese. Trap: 'acido lattico' (lactic acid) is not milk."
   },
   {
     "image": "sample-ko-ramen.jpg",
-    "allergens": ["wheat", "soy", "shellfish", "milk", "peanuts", "eggs", "fish", "sesame"],
-    "expect": { "contains": ["wheat", "soy", "shellfish", "milk"], "possible": ["peanuts", "eggs", "fish"], "absent": ["sesame"] },
+    "allergens": [
+      "wheat",
+      "soy",
+      "shellfish",
+      "milk",
+      "peanuts",
+      "eggs",
+      "fish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "wheat",
+        "soy",
+        "shellfish",
+        "milk"
+      ],
+      "possible": [
+        "peanuts",
+        "eggs",
+        "fish"
+      ],
+      "absent": [
+        "sesame"
+      ]
+    },
     "notes": "Squid extract counts as shellfish (mollusk). Shared-facility notice lists peanut, egg, mackerel."
   },
   {
     "image": "sample-zh-snack.jpg",
-    "allergens": ["peanuts", "sesame", "tree-nuts", "gluten"],
-    "expect": { "contains": ["peanuts", "sesame"], "possible": ["tree-nuts", "gluten"], "absent": [] },
+    "allergens": [
+      "peanuts",
+      "sesame",
+      "tree-nuts",
+      "gluten"
+    ],
+    "expect": {
+      "contains": [
+        "peanuts",
+        "sesame"
+      ],
+      "possible": [
+        "tree-nuts",
+        "gluten"
+      ],
+      "absent": []
+    },
     "notes": "Malt syrup (麦芽糖浆) may contain gluten; shared line with tree nuts."
   },
   {
     "image": "sample-en-hidden-names.jpg",
-    "allergens": ["milk", "eggs", "sesame", "gluten", "peanuts"],
-    "expect": { "contains": ["milk", "eggs", "sesame"], "possible": ["gluten"], "absent": ["peanuts"] },
+    "allergens": [
+      "milk",
+      "eggs",
+      "sesame",
+      "gluten",
+      "peanuts"
+    ],
+    "expect": {
+      "contains": [
+        "milk",
+        "eggs",
+        "sesame"
+      ],
+      "possible": [
+        "gluten"
+      ],
+      "absent": [
+        "peanuts"
+      ]
+    },
     "notes": "No CONTAINS line: casein = milk, albumen = egg, tahini = sesame. Oats are a gluten risk."
   },
   {
     "image": "sample-en-no-allergens.jpg",
-    "allergens": ["peanuts", "milk", "gluten"],
-    "expect": { "contains": [], "possible": [], "absent": ["peanuts", "milk", "gluten"] },
+    "allergens": [
+      "peanuts",
+      "milk",
+      "gluten"
+    ],
+    "expect": {
+      "contains": [],
+      "possible": [],
+      "absent": [
+        "peanuts",
+        "milk",
+        "gluten"
+      ]
+    },
     "notes": "Should raise no alarms."
+  },
+  {
+    "image": "real-oreos.jpg",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "wheat",
+        "gluten",
+        "soy"
+      ],
+      "possible": [],
+      "absent": [
+        "milk",
+        "eggs",
+        "peanuts",
+        "tree-nuts",
+        "fish",
+        "shellfish",
+        "sesame"
+      ]
+    },
+    "notes": "Real photo. CONTAINS: WHEAT, SOY. Blue text on a curved wrapper."
+  },
+  {
+    "image": "real-milk.jpg",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "milk"
+      ],
+      "possible": [],
+      "absent": [
+        "eggs",
+        "peanuts",
+        "tree-nuts",
+        "soy",
+        "wheat",
+        "gluten",
+        "fish",
+        "shellfish",
+        "sesame"
+      ]
+    },
+    "notes": "Real photo. Organic whole milk, labeled gluten free."
+  },
+  {
+    "image": "real-smoothie.jpg",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "milk"
+      ],
+      "possible": [],
+      "absent": [
+        "eggs",
+        "peanuts",
+        "tree-nuts",
+        "soy",
+        "wheat",
+        "gluten",
+        "fish",
+        "shellfish",
+        "sesame"
+      ]
+    },
+    "notes": "Real photo. Lifeway peach kefir; 'natural flavors'; labeled gluten free."
+  },
+  {
+    "image": "real-yogurt.jpg",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "milk"
+      ],
+      "possible": [],
+      "absent": [
+        "eggs",
+        "peanuts",
+        "tree-nuts",
+        "soy",
+        "wheat",
+        "gluten",
+        "fish",
+        "shellfish",
+        "sesame"
+      ]
+    },
+    "notes": "Real photo. Very small print on a small cup, far from the camera."
+  },
+  {
+    "image": "real-milano-cookies.jpg",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "wheat",
+        "gluten",
+        "milk",
+        "soy",
+        "eggs"
+      ],
+      "possible": [],
+      "absent": [
+        "peanuts",
+        "tree-nuts",
+        "fish",
+        "shellfish",
+        "sesame"
+      ]
+    },
+    "notes": "Real photo. Crinkled bag; CONTAINS: WHEAT, MILK, SOY, EGGS."
+  },
+  {
+    "image": "real-ramen.jpg",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "wheat",
+        "gluten",
+        "soy",
+        "eggs",
+        "milk"
+      ],
+      "possible": [
+        "peanuts",
+        "tree-nuts",
+        "sesame",
+        "shellfish",
+        "fish"
+      ],
+      "absent": []
+    },
+    "notes": "Real photo. Milk only as lactose in a long list; facility warning for five allergens. Also contains coconut (not tracked)."
+  },
+  {
+    "image": "real-dumpling-sauce.jpg",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "soy",
+        "wheat",
+        "gluten",
+        "sesame"
+      ],
+      "possible": [
+        "fish",
+        "shellfish"
+      ],
+      "absent": [
+        "milk",
+        "eggs",
+        "peanuts",
+        "tree-nuts"
+      ]
+    },
+    "notes": "Real photo. Right edge cut off. Trap: 'glutinous rice' has no gluten. Also contains mustard (not tracked)."
+  },
+  {
+    "image": "real-teriyaki-sauce.jpg",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "soy",
+        "wheat",
+        "gluten"
+      ],
+      "possible": [],
+      "absent": [
+        "milk",
+        "eggs",
+        "peanuts",
+        "tree-nuts",
+        "fish",
+        "shellfish",
+        "sesame"
+      ]
+    },
+    "notes": "Real photo. Tiny text on a curved bottle; wheat only inside the soy sauce sub-ingredients."
+  },
+  {
+    "image": "real-chicken-noodle-soup.jpg",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [
+        "eggs",
+        "wheat",
+        "gluten"
+      ],
+      "possible": [],
+      "absent": [
+        "milk",
+        "peanuts",
+        "tree-nuts",
+        "soy",
+        "fish",
+        "shellfish",
+        "sesame"
+      ]
+    },
+    "notes": "Real photo. White text on dark label, angled. Also contains celery (not tracked)."
+  },
+  {
+    "image": "real-juice.jpg",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "expect": {
+      "contains": [],
+      "possible": [
+        "tree-nuts"
+      ],
+      "absent": [
+        "milk",
+        "eggs",
+        "peanuts",
+        "soy",
+        "wheat",
+        "gluten",
+        "fish",
+        "shellfish",
+        "sesame"
+      ]
+    },
+    "notes": "Real photo. No allergen ingredients; facility processes tree nuts."
   }
 ]
