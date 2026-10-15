@@ -139,7 +139,7 @@ export function Results({ result, profile, photo, onScanAnother }: Props) {
         onClick={onScanAnother}
         className="rounded-xl bg-emerald-600 py-3.5 font-semibold text-white"
       >
-        Scan another label
+        Scan another photo
       </button>
     </section>
   );
