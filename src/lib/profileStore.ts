@@ -23,3 +23,11 @@ const accessCodeStore = createLocalStore(
 export const saveAccessCode = accessCodeStore.set;
 export const getAccessCode = accessCodeStore.get;
 export const useAccessCode = accessCodeStore.useValue;
+
+const cardLanguageStore = createLocalStore(
+  "card-language-v1",
+  (v): v is string => typeof v === "string",
+);
+
+export const saveCardLanguage = cardLanguageStore.set;
+export const useCardLanguage = cardLanguageStore.useValue;

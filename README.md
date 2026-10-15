@@ -36,6 +36,8 @@ table and photo bucket.
 
 - `src/data/allergens.ts`: the allergens users can pick, with their other
   names in 8 languages.
+- `src/data/allergyCard.ts`: translations for the allergy card travelers show
+  restaurant staff, in 12 languages. These still need a native-speaker review.
 - `src/lib/prompt.ts`: the instructions sent to Claude with each photo.
 - `src/lib/claudeAnalysis.ts`: the Claude call, shared by the app and the tests.
 - `src/app/api/analyze`: the scan endpoint. `src/app/api/feedback` saves

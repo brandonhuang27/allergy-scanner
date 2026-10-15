@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AccessGate } from "@/components/AccessGate";
+import { AllergyCard } from "@/components/AllergyCard";
 import { AllergyPicker } from "@/components/AllergyPicker";
 import { PhotoInput } from "@/components/PhotoInput";
 import { Disclaimer, Results } from "@/components/Results";
@@ -14,6 +15,7 @@ export default function Home() {
   const profile = useProfile();
   const accessCode = useAccessCode();
   const [editing, setEditing] = useState(false);
+  const [showCard, setShowCard] = useState(false);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<{ scan: ScanResult; photo: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -59,6 +61,8 @@ export default function Home() {
         }}
       />
     );
+  } else if (showCard) {
+    body = <AllergyCard profile={profile} onClose={() => setShowCard(false)} />;
   } else if (result) {
     body = (
       <Results
@@ -71,7 +75,11 @@ export default function Home() {
   } else {
     body = (
       <>
-        <ProfileSummary profile={profile} onEdit={() => setEditing(true)} />
+        <ProfileSummary
+          profile={profile}
+          onEdit={() => setEditing(true)}
+          onShowCard={() => setShowCard(true)}
+        />
         <PhotoInput busy={busy} onAnalyze={(image) => analyze(image, profile)} />
         {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
         <Disclaimer />
@@ -90,7 +98,15 @@ export default function Home() {
   );
 }
 
-function ProfileSummary({ profile, onEdit }: { profile: AllergyProfile; onEdit: () => void }) {
+function ProfileSummary({
+  profile,
+  onEdit,
+  onShowCard,
+}: {
+  profile: AllergyProfile;
+  onEdit: () => void;
+  onShowCard: () => void;
+}) {
   const names = [
     ...profile.allergens.map((id) => ALLERGENS.find((a) => a.id === id)?.label ?? id),
     ...profile.custom,
@@ -119,6 +135,13 @@ function ProfileSummary({ profile, onEdit }: { profile: AllergyProfile; onEdit: 
           </li>
         ))}
       </ul>
+      <button
+        type="button"
+        onClick={onShowCard}
+        className="mt-3 w-full rounded-lg border border-red-600 bg-white py-2 text-sm font-semibold text-red-700 dark:bg-neutral-950 dark:text-red-400"
+      >
+        Show allergy card for staff
+      </button>
     </div>
   );
 }
