@@ -15,6 +15,10 @@ create table if not exists public.feedback (
 -- with the public key. Only the app's server (using the secret key) can.
 alter table public.feedback enable row level security;
 
+-- New tables aren't exposed to the Data API automatically, so explicitly let
+-- the server's secret key (the service_role) save and read feedback.
+grant select, insert on public.feedback to service_role;
+
 -- Private bucket for photos people opt in to sharing.
 insert into storage.buckets (id, name, public)
 values ('feedback-photos', 'feedback-photos', false)
