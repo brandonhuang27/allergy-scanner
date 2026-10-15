@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Allergy Scanner
 
-## Getting Started
+Scan a food ingredient label in any language and see which of your allergens it
+contains, may contain, or couldn't be checked. Built with Next.js, the Claude
+API and Supabase, hosted on Vercel.
 
-First, run the development server:
+The app never says a food is safe. It helps people spot risks; they still
+decide.
 
-```bash
+## Running locally
+
+Requires Node 22 (`nvm use` picks it up from `.nvmrc`).
+
+```
+nvm use
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Settings go in `.env.local` (never committed):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | What it is |
+|---|---|
+| `ANTHROPIC_API_KEY` | Claude API key, from console.anthropic.com |
+| `ACCESS_CODE` | Code testers enter before scanning. Optional locally, required in production |
+| `SUPABASE_URL` | Supabase project URL (`https://xxxx.supabase.co`), for feedback |
+| `SUPABASE_SECRET_KEY` | Supabase secret key (`sb_secret_...`), for feedback |
 
-## Learn More
+The same variables are set in the Vercel project for the live site. Run
+`supabase/schema.sql` once in the Supabase SQL Editor to create the feedback
+table and photo bucket.
 
-To learn more about Next.js, take a look at the following resources:
+## How it works
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/data/allergens.ts`: the allergens users can pick, with their other
+  names in 8 languages.
+- `src/lib/prompt.ts`: the instructions sent to Claude with each photo.
+- `src/lib/claudeAnalysis.ts`: the Claude call, shared by the app and the tests.
+- `src/app/api/analyze`: the scan endpoint. `src/app/api/feedback` saves
+  thumbs up / down to Supabase.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Testing accuracy
 
-## Deploy on Vercel
+`npm run test:labels` runs every label in `test-labels/` through the same
+analysis and reports missed allergens, which must stay at 0. See
+`test-labels/README.md` to add photos. Each run costs a few cents per label.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploying
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Pushing to `main` deploys to production on Vercel automatically.
