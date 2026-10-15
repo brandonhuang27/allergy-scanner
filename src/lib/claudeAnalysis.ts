@@ -10,7 +10,7 @@ import type { AllergyProfile, ScanResult } from "./types";
 
 export const MODEL = "claude-opus-5-5";
 /** How much Claude thinks before answering. SCAN_EFFORT overrides it, e.g. for tests. */
-export const EFFORT = (process.env.SCAN_EFFORT ?? "high") as "low" | "medium" | "high";
+export const EFFORT = (process.env.SCAN_EFFORT ?? "low") as "low" | "medium" | "high";
 
 const client = new Anthropic();
 
