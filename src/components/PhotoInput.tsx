@@ -9,7 +9,8 @@ interface Props {
 }
 
 export function PhotoInput({ busy, onAnalyze }: Props) {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const cameraRef = useRef<HTMLInputElement>(null);
+  const libraryRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,6 +24,11 @@ export function PhotoInput({ busy, onAnalyze }: Props) {
     }
   }
 
+  function onPick(e: React.ChangeEvent<HTMLInputElement>) {
+    handleFile(e.target.files?.[0]);
+    e.target.value = "";
+  }
+
   return (
     <section className="flex flex-col gap-4">
       <div>
@@ -32,18 +38,17 @@ export function PhotoInput({ busy, onAnalyze }: Props) {
         </p>
       </div>
 
-      {/* On phones, capture="environment" opens the back camera directly. */}
+      {/* capture="environment" opens the back camera directly; without it, phones
+          offer the photo library (iPhones also offer the camera from there). */}
       <input
-        ref={inputRef}
+        ref={cameraRef}
         type="file"
         accept="image/*"
         capture="environment"
         className="hidden"
-        onChange={(e) => {
-          handleFile(e.target.files?.[0]);
-          e.target.value = "";
-        }}
+        onChange={onPick}
       />
+      <input ref={libraryRef} type="file" accept="image/*" className="hidden" onChange={onPick} />
 
       {image ? (
         <>
@@ -57,10 +62,10 @@ export function PhotoInput({ busy, onAnalyze }: Props) {
             <button
               type="button"
               disabled={busy}
-              onClick={() => inputRef.current?.click()}
+              onClick={() => libraryRef.current?.click()}
               className="flex-1 rounded-xl border border-neutral-200 py-3.5 font-medium disabled:opacity-40 dark:border-neutral-800"
             >
-              Retake
+              Change photo
             </button>
             <button
               type="button"
@@ -73,14 +78,24 @@ export function PhotoInput({ busy, onAnalyze }: Props) {
           </div>
         </>
       ) : (
-        <button
-          type="button"
-          onClick={() => inputRef.current?.click()}
-          className="flex h-56 flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-neutral-300 text-neutral-600 hover:border-emerald-500 hover:text-emerald-700 dark:border-neutral-700 dark:text-neutral-400"
-        >
-          <span aria-hidden className="text-4xl">📷</span>
-          <span className="font-medium">Take or choose a photo</span>
-        </button>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => cameraRef.current?.click()}
+            className="flex h-40 flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-neutral-300 text-neutral-600 hover:border-emerald-500 hover:text-emerald-700 dark:border-neutral-700 dark:text-neutral-400"
+          >
+            <span aria-hidden className="text-4xl">📷</span>
+            <span className="font-medium">Take photo</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => libraryRef.current?.click()}
+            className="flex h-40 flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-neutral-300 text-neutral-600 hover:border-emerald-500 hover:text-emerald-700 dark:border-neutral-700 dark:text-neutral-400"
+          >
+            <span aria-hidden className="text-4xl">🖼️</span>
+            <span className="font-medium">Choose from library</span>
+          </button>
+        </div>
       )}
 
       {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
