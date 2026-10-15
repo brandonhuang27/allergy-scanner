@@ -9,18 +9,22 @@ import type { AllergyProfile, ScanResult } from "./types";
 // test-labels script so both always run exactly the same analysis.
 
 export const MODEL = "claude-opus-5-5";
+/** How much Claude thinks before answering. SCAN_EFFORT overrides it, e.g. for tests. */
+export const EFFORT = (process.env.SCAN_EFFORT ?? "high") as "low" | "medium" | "high";
 
 const client = new Anthropic();
 
 // The shape Claude must reply in. Structured outputs guarantee valid JSON
 // matching this schema.
 const OutputSchema = z.object({
+  kind: z.enum(["label", "menu"]),
   readable: z.boolean(),
   detectedLanguage: z.string(),
   ingredientsText: z.string(),
   findings: z.array(
     z.object({
       verdict: z.enum(["contains", "possible", "unknown"]),
+      dish: z.string(),
       allergen: z.string(),
       originalText: z.string(),
       translation: z.string(),
@@ -31,7 +35,12 @@ const OutputSchema = z.object({
 });
 
 /** Claude declined, or its answer was cut off or unparseable. */
-export class AnalysisFailedError extends Error {}
+export class AnalysisFailedError extends Error {
+  /** Tokens used before failing (failed requests are still billed). */
+  constructor(message: string, readonly usage?: Anthropic.Beta.BetaUsage) {
+    super(message);
+  }
+}
 
 export interface AnalysisOutcome {
   result: ScanResult;
@@ -43,10 +52,12 @@ export async function analyzeWithClaude(
   jpegBase64: string,
   profile: AllergyProfile,
 ): Promise<AnalysisOutcome> {
-  const response = await client.beta.messages.parse({
+  let response;
+  // Streamed so long menus can use a large output limit without timing out.
+  const stream = client.beta.messages.stream({
     model: MODEL,
-    max_tokens: 16000,
-    output_config: { effort: "high", format: betaZodOutputFormat(OutputSchema) },
+    max_tokens: 64000,
+    output_config: { effort: EFFORT, format: betaZodOutputFormat(OutputSchema) },
     // If a safety classifier wrongly declines, retry on Anthropic's
     // recommended fallback model instead of failing.
     betas: ["server-side-fallback-2026-07-01"],
@@ -60,27 +71,43 @@ export async function analyzeWithClaude(
             type: "image",
             source: { type: "base64", media_type: "image/jpeg", data: jpegBase64 },
           },
-          { type: "text", text: "Check this label for my allergens." },
+          { type: "text", text: "Check this for my allergens." },
         ],
       },
     ],
   });
+  try {
+    response = await stream.finalMessage();
+  } catch (error) {
+    // API errors (auth, rate limits, ...) are handled by the caller. Other SDK
+    // errors here mean the reply couldn't be parsed, e.g. it was cut off.
+    if (error instanceof Anthropic.APIError || !(error instanceof Anthropic.AnthropicError)) throw error;
+    throw new AnalysisFailedError(
+      `Couldn't parse the response: ${error.message}`,
+      stream.currentMessage?.usage,
+    );
+  }
 
   if (response.stop_reason === "refusal") {
-    throw new AnalysisFailedError("Claude declined to analyze this image.");
+    throw new AnalysisFailedError("Claude declined to analyze this image.", response.usage);
   }
   const output = response.parsed_output;
   if (!output || response.stop_reason === "max_tokens") {
-    throw new AnalysisFailedError(`Incomplete response (stop_reason: ${response.stop_reason}).`);
+    throw new AnalysisFailedError(
+      `Incomplete response (stop_reason: ${response.stop_reason}).`,
+      response.usage,
+    );
   }
 
   return {
     result: {
+      kind: output.kind,
       readable: output.readable,
       detectedLanguage: output.detectedLanguage,
       ingredientsText: output.ingredientsText,
-      findings: output.findings.map((f) => ({
+      findings: output.findings.map(({ dish, ...f }) => ({
         ...f,
+        ...(dish.trim() ? { dish: dish.trim() } : {}),
         allergen: normalizeAllergen(f.allergen, profile.custom),
       })),
       message: output.message || undefined,

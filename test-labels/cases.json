@@ -579,5 +579,922 @@
       ]
     },
     "notes": "Real photo. No allergen ingredients; facility processes tree nuts."
+  },
+  {
+    "image": "menu-billy-brunch-es.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "benedictinos",
+          "benedict"
+        ],
+        "mustFlag": [
+          "eggs",
+          "milk",
+          "gluten"
+        ]
+      },
+      {
+        "match": [
+          "bircher"
+        ],
+        "mustFlag": [
+          "milk",
+          "gluten"
+        ]
+      },
+      {
+        "match": [
+          "açaí",
+          "acai",
+          "açai"
+        ],
+        "mustFlag": [
+          "tree-nuts"
+        ]
+      },
+      {
+        "match": [
+          "dulce de leche"
+        ],
+        "mustFlag": [
+          "milk",
+          "gluten"
+        ]
+      }
+    ],
+    "notes": "Spanish brunch menu with the restaurant's own allergen icons (lactose, gluten, nuts)."
+  },
+  {
+    "image": "menu-clementina.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "focaccia"
+        ],
+        "mustFlag": [
+          "wheat",
+          "milk"
+        ],
+        "notContains": [
+          "gluten"
+        ]
+      },
+      {
+        "match": [
+          "al pesto"
+        ],
+        "mustFlag": [
+          "tree-nuts",
+          "eggs",
+          "milk"
+        ],
+        "notContains": [
+          "gluten"
+        ]
+      },
+      {
+        "match": [
+          "tonnato"
+        ],
+        "mustFlag": [
+          "fish"
+        ]
+      },
+      {
+        "match": [
+          "cozze",
+          "mussel"
+        ],
+        "mustFlag": [
+          "shellfish",
+          "milk",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "pescetti",
+          "smelt"
+        ],
+        "mustFlag": [
+          "fish",
+          "eggs"
+        ]
+      }
+    ],
+    "notes": "100% gluten-free restaurant. Focaccia and breadcrumbs use deglutinated wheat starch: wheat yes, gluten no. GF pasta contains eggs."
+  },
+  {
+    "image": "menu-everest-kitchen.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "vegetable samosa"
+        ],
+        "mustFlag": [
+          "wheat",
+          "gluten"
+        ]
+      },
+      {
+        "match": [
+          "momo"
+        ],
+        "mustFlag": [
+          "wheat",
+          "sesame"
+        ]
+      },
+      {
+        "match": [
+          "korma"
+        ],
+        "mustFlag": [
+          "tree-nuts",
+          "milk"
+        ]
+      },
+      {
+        "match": [
+          "butter chicken"
+        ],
+        "mustFlag": [
+          "milk"
+        ]
+      },
+      {
+        "match": [
+          "cheese naan"
+        ],
+        "mustFlag": [
+          "wheat",
+          "milk"
+        ]
+      },
+      {
+        "match": [
+          "aachar",
+          "achar"
+        ],
+        "mustFlag": [
+          "sesame"
+        ]
+      },
+      {
+        "match": [
+          "chana masala"
+        ],
+        "notContains": [
+          "gluten"
+        ]
+      },
+      {
+        "match": [
+          "pakoda",
+          "pakora"
+        ],
+        "notContains": [
+          "gluten"
+        ]
+      }
+    ],
+    "notes": "Nepali/Indian with gluten-free icons. Korma has cashews; momo comes with tomato-sesame chutney."
+  },
+  {
+    "image": "menu-freshroll.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "peanut"
+        ],
+        "mustFlag": [
+          "peanuts"
+        ]
+      },
+      {
+        "match": [
+          "shrimp"
+        ],
+        "mustFlag": [
+          "shellfish"
+        ]
+      },
+      {
+        "match": [
+          "sandwich",
+          "baguette",
+          "banh mi"
+        ],
+        "mustFlag": [
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "tofu"
+        ],
+        "mustFlag": [
+          "soy",
+          "sesame"
+        ]
+      },
+      {
+        "match": [
+          "vinaigrette"
+        ],
+        "mustFlag": [
+          "fish"
+        ]
+      }
+    ],
+    "notes": "Build-your-own Vietnamese. Peanut sauce; Vietnamese vinaigrette usually has fish sauce."
+  },
+  {
+    "image": "menu-mr-east-kitchen.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "pad thai"
+        ],
+        "mustFlag": [
+          "shellfish",
+          "eggs",
+          "soy",
+          "peanuts"
+        ]
+      },
+      {
+        "match": [
+          "shaking beef"
+        ],
+        "mustFlag": [
+          "soy",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "garlic noodle"
+        ],
+        "mustFlag": [
+          "milk",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "crispy chicken salad"
+        ],
+        "mustFlag": [
+          "eggs",
+          "milk",
+          "sesame",
+          "wheat"
+        ]
+      }
+    ],
+    "notes": "Pad Thai doesn't mention peanuts but is usually served with them. Hoisin = soy and wheat."
+  },
+  {
+    "image": "menu-san-tung.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "oyster sauce"
+        ],
+        "mustFlag": [
+          "shellfish"
+        ]
+      },
+      {
+        "match": [
+          "sweet and sour pork"
+        ],
+        "mustFlag": [
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "dry fried beef"
+        ],
+        "mustFlag": [
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "mongolian"
+        ],
+        "mustFlag": [
+          "soy",
+          "wheat"
+        ]
+      }
+    ],
+    "notes": "Chinese, with Chinese and Korean dish names. Battered dishes = wheat; oyster sauce = shellfish."
+  },
+  {
+    "image": "menu-sweetgreen.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "kale caesar"
+        ],
+        "mustFlag": [
+          "milk",
+          "gluten"
+        ]
+      },
+      {
+        "match": [
+          "harvest"
+        ],
+        "mustFlag": [
+          "milk",
+          "tree-nuts"
+        ]
+      },
+      {
+        "match": [
+          "sesame crunch"
+        ],
+        "mustFlag": [
+          "sesame",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "miso glazed salmon"
+        ],
+        "mustFlag": [
+          "fish",
+          "soy",
+          "sesame",
+          "tree-nuts"
+        ]
+      }
+    ],
+    "notes": "Wall screen photographed at an angle, with small text and icons."
+  },
+  {
+    "image": "menu-tonys-pizza.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "upside down anchovy"
+        ],
+        "mustFlag": [
+          "fish",
+          "tree-nuts",
+          "milk"
+        ]
+      },
+      {
+        "match": [
+          "clam"
+        ],
+        "mustFlag": [
+          "shellfish",
+          "milk"
+        ]
+      },
+      {
+        "match": [
+          "red top"
+        ],
+        "mustFlag": [
+          "milk",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "margherita"
+        ],
+        "mustFlag": [
+          "milk",
+          "wheat"
+        ]
+      }
+    ],
+    "notes": "Dense decorative fonts. Detroit and coal-fired pizzas note 'contains condensed milk'. Pesto = tree nuts."
+  },
+  {
+    "image": "menu-tycoon-kitchen.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "pad thai"
+        ],
+        "mustFlag": [
+          "shellfish",
+          "eggs",
+          "soy",
+          "peanuts"
+        ]
+      },
+      {
+        "match": [
+          "pad see ew"
+        ],
+        "mustFlag": [
+          "eggs",
+          "soy",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "hai nan",
+          "hainan"
+        ],
+        "mustFlag": [
+          "eggs"
+        ]
+      },
+      {
+        "match": [
+          "eggplant tofu"
+        ],
+        "mustFlag": [
+          "soy"
+        ]
+      }
+    ],
+    "notes": "Clean online menu, nearly the same dishes as Mr East Kitchen."
+  },
+  {
+    "image": "menu-yifang-fruit-tea.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "black tea latte"
+        ],
+        "mustFlag": [
+          "milk"
+        ]
+      },
+      {
+        "match": [
+          "grass jelly almond"
+        ],
+        "mustFlag": [
+          "milk",
+          "tree-nuts"
+        ]
+      },
+      {
+        "match": [
+          "almond jelly"
+        ],
+        "mustFlag": [
+          "tree-nuts"
+        ]
+      },
+      {
+        "match": [
+          "salted cream"
+        ],
+        "mustFlag": [
+          "milk"
+        ]
+      }
+    ],
+    "notes": "Long drink menu with tiny text. Almond jelly; milk substitution options (soy, almond, oat)."
+  },
+  {
+    "image": "menu-udessert-story.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "monster"
+        ],
+        "mustFlag": [
+          "peanuts",
+          "tree-nuts",
+          "milk",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "pistachio"
+        ],
+        "mustFlag": [
+          "tree-nuts",
+          "milk"
+        ]
+      },
+      {
+        "match": [
+          "takoyaki"
+        ],
+        "mustFlag": [
+          "shellfish",
+          "wheat",
+          "eggs"
+        ]
+      },
+      {
+        "match": [
+          "sticky rice toast"
+        ],
+        "mustFlag": [
+          "tree-nuts",
+          "milk",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "corn dog"
+        ],
+        "mustFlag": [
+          "wheat",
+          "milk"
+        ]
+      }
+    ],
+    "notes": "Desserts with brand-name ingredients (Snickers, Ferrero, Oreo, Nutella). Takoyaki has no description."
+  },
+  {
+    "image": "menu-web-ja-wall.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "海老",
+          "shrimp"
+        ],
+        "mustFlag": [
+          "shellfish",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "ふかひれ",
+          "shark"
+        ],
+        "mustFlag": [
+          "fish",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "坦坦",
+          "tantan",
+          "dan dan"
+        ],
+        "mustFlag": [
+          "sesame",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "焼餃子"
+        ],
+        "mustFlag": [
+          "wheat"
+        ]
+      }
+    ],
+    "notes": "Japanese painted on a wall, no descriptions. Shrimp dumplings, shark fin noodles, tantanmen."
+  },
+  {
+    "image": "menu-web-hk-thai-lunch.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "龍蝦",
+          "lobster"
+        ],
+        "mustFlag": [
+          "shellfish"
+        ]
+      },
+      {
+        "match": [
+          "魚餅",
+          "fish cake"
+        ],
+        "mustFlag": [
+          "fish"
+        ]
+      },
+      {
+        "match": [
+          "蝦醬",
+          "shrimp paste"
+        ],
+        "mustFlag": [
+          "shellfish"
+        ]
+      },
+      {
+        "match": [
+          "小虎蝦",
+          "pad thai"
+        ],
+        "mustFlag": [
+          "shellfish"
+        ]
+      },
+      {
+        "match": [
+          "斑蘭",
+          "pandan"
+        ],
+        "mustFlag": [
+          "eggs"
+        ]
+      }
+    ],
+    "notes": "Hong Kong Thai lunch menu in Chinese and English."
+  },
+  {
+    "image": "menu-web-tw-korean-order-sheet.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "海鮮煎餅",
+          "seafood pancake"
+        ],
+        "mustFlag": [
+          "shellfish",
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "蛤蜊",
+          "clam"
+        ],
+        "mustFlag": [
+          "shellfish",
+          "soy"
+        ]
+      },
+      {
+        "match": [
+          "石鍋拌飯",
+          "bibimbap"
+        ],
+        "mustFlag": [
+          "eggs",
+          "sesame"
+        ]
+      }
+    ],
+    "notes": "Korean restaurant order sheet in Chinese characters only, no descriptions."
+  },
+  {
+    "image": "menu-web-chalkboard-banh-mi.jpg",
+    "kind": "menu",
+    "allergens": [
+      "milk",
+      "eggs",
+      "peanuts",
+      "tree-nuts",
+      "soy",
+      "wheat",
+      "gluten",
+      "fish",
+      "shellfish",
+      "sesame"
+    ],
+    "dishes": [
+      {
+        "match": [
+          "grits"
+        ],
+        "mustFlag": [
+          "shellfish",
+          "milk"
+        ]
+      },
+      {
+        "match": [
+          "spring roll",
+          "goi cuon"
+        ],
+        "mustFlag": [
+          "shellfish"
+        ]
+      },
+      {
+        "match": [
+          "banh mi",
+          "bao"
+        ],
+        "mustFlag": [
+          "wheat"
+        ]
+      },
+      {
+        "match": [
+          "bagel"
+        ],
+        "mustFlag": [
+          "wheat",
+          "milk"
+        ]
+      },
+      {
+        "match": [
+          "egg roll"
+        ],
+        "mustFlag": [
+          "wheat"
+        ]
+      }
+    ],
+    "notes": "Handwritten chalkboard, photographed at an angle with a ceiling fan partly in front."
   }
 ]

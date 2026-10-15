@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { ALLERGENS } from "@/data/allergens";
 import { Feedback } from "./Feedback";
 import type { AllergyProfile, Finding, ScanResult, Verdict } from "@/lib/types";
@@ -40,6 +41,7 @@ interface Props {
 }
 
 export function Results({ result, profile, photo, onScanAnother }: Props) {
+  const isMenu = result.kind === "menu";
   const flagged = new Set(result.findings.map((f) => f.allergen));
   const notFound = [...profile.allergens, ...profile.custom].filter((a) => !flagged.has(a));
 
@@ -49,10 +51,17 @@ export function Results({ result, profile, photo, onScanAnother }: Props) {
         <h2 className="text-xl font-semibold">Results</h2>
         {result.readable && result.detectedLanguage && (
           <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-            Label language: {result.detectedLanguage}
+            {isMenu ? "Menu" : "Label"} language: {result.detectedLanguage}
           </p>
         )}
       </div>
+
+      {isMenu && result.readable && (
+        <p className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-900 dark:border-red-900 dark:bg-red-950/50 dark:text-red-100">
+          Menus don&apos;t list every ingredient. Always tell your server about your allergy before
+          ordering, even for dishes that aren&apos;t flagged.
+        </p>
+      )}
 
       {result.message && (
         <p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm dark:border-amber-900 dark:bg-amber-950/40">
@@ -62,38 +71,46 @@ export function Results({ result, profile, photo, onScanAnother }: Props) {
 
       {!result.readable ? (
         <p className="rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm dark:border-neutral-800 dark:bg-neutral-900">
-          ⚪ We couldn&apos;t read this label well enough to check it. Try a closer, sharper photo
-          with the whole ingredient list in frame and no glare.
+          ⚪ We couldn&apos;t read this {isMenu ? "menu" : "label"} well enough to check it. Try a
+          closer, sharper photo with the {isMenu ? "dishes" : "whole ingredient list"} in frame and
+          no glare.
         </p>
       ) : (
         <>
-          {GROUPS.map((g) => {
-            const items = result.findings.filter((f) => f.verdict === g.verdict);
-            if (items.length === 0) return null;
-            return (
-              <div key={g.verdict} className={`rounded-xl border p-3 ${g.box}`}>
-                <h3 className="mb-2 flex items-center gap-2 font-semibold">
-                  <span aria-hidden>{g.icon}</span> {g.title}
-                  <span className="text-sm font-normal text-neutral-600 dark:text-neutral-400">
-                    ({items.length})
-                  </span>
-                </h3>
-                <ul className="flex flex-col gap-2">
-                  {items.map((f, i) => (
-                    <FindingCard key={i} finding={f} badge={g.badge} />
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
+          {isMenu ? (
+            <MenuDishes findings={result.findings} />
+          ) : (
+            GROUPS.map((g) => {
+              const items = result.findings.filter((f) => f.verdict === g.verdict);
+              if (items.length === 0) return null;
+              return (
+                <div key={g.verdict} className={`rounded-xl border p-3 ${g.box}`}>
+                  <h3 className="mb-2 flex items-center gap-2 font-semibold">
+                    <span aria-hidden>{g.icon}</span> {g.title}
+                    <span className="text-sm font-normal text-neutral-600 dark:text-neutral-400">
+                      ({items.length})
+                    </span>
+                  </h3>
+                  <ul className="flex flex-col gap-2">
+                    {items.map((f, i) => (
+                      <FindingCard key={i} finding={f} badge={g.badge} />
+                    ))}
+                  </ul>
+                </div>
+              );
+            })
+          )}
 
           {notFound.length > 0 && (
             <div className="rounded-xl border border-neutral-200 p-3 text-sm dark:border-neutral-800">
-              <p className="font-medium">Not found in the text</p>
+              <p className="font-medium">
+                {isMenu ? "No dishes flagged for" : "Not found in the text"}
+              </p>
               <p className="mt-1">{notFound.map(labelFor).join(", ")}</p>
               <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-                This only means we didn&apos;t see them on the label. It does not mean the food is
-                safe.
+                {isMenu
+                  ? "Dishes can still contain these without the menu saying so. Ask your server."
+                  : "This only means we didn't see them on the label. It does not mean the food is safe."}
               </p>
             </div>
           )}
@@ -105,7 +122,8 @@ export function Results({ result, profile, photo, onScanAnother }: Props) {
                 {result.ingredientsText}
               </p>
               <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-                Compare this with the label. If anything was misread, retake the photo.
+                Compare this with the {isMenu ? "menu" : "label"}. If anything was misread, retake the
+                photo.
               </p>
             </details>
           )}
@@ -124,6 +142,84 @@ export function Results({ result, profile, photo, onScanAnother }: Props) {
         Scan another label
       </button>
     </section>
+  );
+}
+
+const VERDICT_ORDER: Verdict[] = ["contains", "possible", "unknown"];
+const COLLAPSED_DISHES = 8;
+
+/** Groups a dish's findings that share a reason (e.g. wheat and gluten for pastry), worst first. */
+function mergeByReason(items: Finding[]) {
+  const byReason = new Map<string, Finding[]>();
+  for (const f of VERDICT_ORDER.flatMap((v) => items.filter((x) => x.verdict === v))) {
+    byReason.set(f.reason, [...(byReason.get(f.reason) ?? []), f]);
+  }
+  return [...byReason.entries()].map(([reason, flags]) => ({ reason, flags }));
+}
+
+/** Menu results: one card per dish, worst first, with each flagged allergen inside. */
+function MenuDishes({ findings }: { findings: Finding[] }) {
+  const [showAll, setShowAll] = useState(false);
+
+  const byDish = new Map<string, Finding[]>();
+  for (const f of findings) {
+    const dish = f.dish || "Other";
+    byDish.set(dish, [...(byDish.get(dish) ?? []), f]);
+  }
+  const worst = (items: Finding[]) =>
+    Math.min(...items.map((f) => VERDICT_ORDER.indexOf(f.verdict)));
+  // Stable sort: dishes keep menu order within each severity.
+  const dishes = [...byDish.entries()].sort((a, b) => worst(a[1]) - worst(b[1]));
+  const shown = showAll ? dishes : dishes.slice(0, COLLAPSED_DISHES);
+
+  if (dishes.length === 0) return null;
+
+  return (
+    <div className="flex flex-col gap-2">
+      <h3 className="font-semibold">
+        Dishes to ask about{" "}
+        <span className="text-sm font-normal text-neutral-600 dark:text-neutral-400">
+          ({dishes.length})
+        </span>
+      </h3>
+      <ul className="flex flex-col gap-2">
+        {shown.map(([dish, items]) => {
+          const group = GROUPS[worst(items)];
+          return (
+            <li key={dish} className={`rounded-xl border p-3 ${group.box}`}>
+              <p className="font-semibold">{dish}</p>
+              <ul className="mt-2 flex flex-col gap-2">
+                {mergeByReason(items).map(({ reason, flags }) => (
+                  <li key={reason} className="text-sm">
+                    {flags.map((f) => {
+                      const g = GROUPS[VERDICT_ORDER.indexOf(f.verdict)];
+                      return (
+                        <span
+                          key={f.allergen}
+                          className={`mr-1.5 mb-1 inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${g.badge}`}
+                        >
+                          {labelFor(f.allergen)} · {g.title.toLowerCase()}
+                        </span>
+                      );
+                    })}
+                    {reason}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          );
+        })}
+      </ul>
+      {dishes.length > COLLAPSED_DISHES && (
+        <button
+          type="button"
+          onClick={() => setShowAll(!showAll)}
+          className="rounded-xl border border-neutral-200 py-2.5 text-sm font-medium dark:border-neutral-800"
+        >
+          {showAll ? "Show fewer" : `Show all ${dishes.length} dishes`}
+        </button>
+      )}
+    </div>
   );
 }
 

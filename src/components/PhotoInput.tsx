@@ -32,9 +32,9 @@ export function PhotoInput({ busy, onAnalyze }: Props) {
   return (
     <section className="flex flex-col gap-4">
       <div>
-        <h2 className="text-xl font-semibold">Scan a label</h2>
+        <h2 className="text-xl font-semibold">Scan a label or menu</h2>
         <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-          Take a clear, close photo of the ingredient list. Any language works.
+          Take a clear, close photo of an ingredient list or a menu. Any language works.
         </p>
       </div>
 
@@ -55,7 +55,7 @@ export function PhotoInput({ busy, onAnalyze }: Props) {
           {/* eslint-disable-next-line @next/next/no-img-element -- local data URL preview */}
           <img
             src={image}
-            alt="Your label photo"
+            alt="Your photo"
             className="max-h-80 w-full rounded-xl border border-neutral-200 object-contain dark:border-neutral-800"
           />
           <div className="flex gap-2">

@@ -15,6 +15,8 @@ export type Verdict = "contains" | "possible" | "unknown";
 
 export interface Finding {
   verdict: Verdict;
+  /** Menus only: the dish this finding is about, e.g. "Pad Thai". Empty for labels. */
+  dish?: string;
   /** An AllergenId, or a custom allergen exactly as the user typed it. */
   allergen: string;
   /** The text as printed on the label, in its original language. */
@@ -26,11 +28,13 @@ export interface Finding {
 }
 
 export interface ScanResult {
+  /** Whether the photo was a packaged food label or a menu. */
+  kind: "label" | "menu";
   /** False when the photo was too blurry, cropped, or not an ingredient label. */
   readable: boolean;
   /** e.g. "German". Empty when unreadable. */
   detectedLanguage: string;
-  /** Full ingredient text as read from the photo, for the user to double-check. */
+  /** Ingredient list (or menu text) as read from the photo, for the user to double-check. */
   ingredientsText: string;
   findings: Finding[];
   /** Shown to the user when something about the photo needs attention. */
